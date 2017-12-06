@@ -9,9 +9,9 @@ int main(int argc, char **argv){
   int KEY = 24601;
   int S = -1;
   if (strcmp(argv[1], "-c") == 0){
-    S = semget(KEY, 1, IPC_CREAT | IPC_EXCL);
+    S = semget(KEY, 1, IPC_CREAT | IPC_EXCL | 0644);
     if (S != -1){
-      semctl(S, 0, SETVAL, *argv[2]);
+      semctl(S, 0, SETVAL, atoi(argv[2]));
       printf("semaphore created: %d\n", S);
     }
     else{
@@ -19,7 +19,13 @@ int main(int argc, char **argv){
     }
   }
   else if (strcmp(argv[1], "-v") == 0){
-    printf("semaphore value: %d\n", semctl(S, 0, GETVAL));
+    S = semget(KEY, 1, 0);
+    if (S != -1){
+      printf("semaphore value: %d\n", semctl(S, 0, GETVAL));
+    }
+    else{
+      printf("semaphore doesn't exist\n");
+    }
   }
   else if (strcmp(argv[1], "-r") == 0){
     
