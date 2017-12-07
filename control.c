@@ -13,6 +13,7 @@ int main(int argc, char **argv){
     if (S != -1){
       semctl(S, 0, SETVAL, atoi(argv[2]));
       printf("semaphore created: %d\n", S);
+      printf("value set: %d\n", semctl(S, 0, GETVAL));
     }
     else{
       printf("semaphore already exists\n");
@@ -37,5 +38,5 @@ int main(int argc, char **argv){
       printf("semaphore doesn't exist\n");
     }
   }
-  
+  return 0;
 }
