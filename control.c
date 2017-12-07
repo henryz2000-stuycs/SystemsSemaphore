@@ -28,7 +28,14 @@ int main(int argc, char **argv){
     }
   }
   else if (strcmp(argv[1], "-r") == 0){
-    
+    S = semget(KEY, 1, 0);
+    if (S != -1){
+      semctl(S, 0, IPC_RMID);
+      printf("semaphore removed: %d\n", S);
+    }
+    else{
+      printf("semaphore doesn't exist\n");
+    }
   }
   
 }
